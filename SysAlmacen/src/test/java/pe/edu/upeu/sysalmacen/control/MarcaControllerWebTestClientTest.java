@@ -82,7 +82,7 @@ public class MarcaControllerWebTestClientTest {
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody()
-                .jsonPath("$[0].nombre").isEqualTo("Adidas")
+                .jsonPath("$[0].nombre").isEqualTo("Puma")
                 .jsonPath("$").isArray();
         //.jsonPath("$").value(Matchers.hasSize(5));
     }
