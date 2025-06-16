@@ -48,14 +48,25 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-			    timeout(time: 8, unit: 'MINUTES'){
-					// Ejecutar mvn spring-boot:run
-					echo "mvn spring-boot:run -f SysAlmacen/pom.xml"
-                }			
-                //echo "mvn spring-boot:run -f SysAlmacen/pom.xml"
-            }
-        }
+		stage('Deploy to Tomcat') {
+			 steps {
+			 timeout(time: 5, unit: 'MINUTES') {
+			 script {
+			 // Ruta del archivo WAR generado
+			 def warFile = "SysAlmacen/target/SysAlmacen.war"
+			 
+			 // Subir el WAR usando curl (Tomcat Manager API)
+			 sh """
+			 curl -u admin:s3cret -T "${warFile}" http://172.22.1.8:8080/manager/text/deploy?path=/SysAlmacen&update=true
+			 """
+			 }
+			 }
+			}
+		}
+
+		
+		
+		
+		
     }
 }
